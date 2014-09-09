@@ -1,5 +1,9 @@
+import sys
 from flask import Flask
-from src.view.main import mainview
+from src.views.mainview import mainview
+
+
+#sys.path.append(u"/home/dimkonko/env/FlaskBlog")
 
 app = Flask(__name__)
 app.register_blueprint(mainview)

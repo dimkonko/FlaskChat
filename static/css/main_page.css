@@ -1,7 +1,13 @@
 #wrapper {
 	display: inline-block;
 	width: 800px;
-	margin-top: 12%;
+	height: 273px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
 }
 #block {
 	text-align: center;
@@ -40,32 +46,13 @@
 	color: #404040;
 	text-align: left;
 }
-.customBut {
-	width: 200px;
-	-webkit-border-radius: 14;
-	-moz-border-radius: 14;
-	border-radius: 14px;
-	font-family: Arial;
-	color: #ffffff;
-	font-size: 15px;
-	background: #2bb4e6;
-	padding: 10px 20px 10px 20px;
-	text-decoration: none;
-	border: none;
-	display: block;
-	margin: auto;
-}
-
-.customBut:hover {
-	background: #3cb0fd;
-	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-	cursor: pointer;
-}
 .but_wrapp {
 	float: left;
 	width: 50%;
+}
+.anim_obj {
+	opacity: 0;
+}
+.modal_form {
+	padding: 10px;
 }
