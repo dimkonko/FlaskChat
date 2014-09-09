@@ -1,12 +1,26 @@
 <!doctype html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>Flask Chat</title>
+		<link rel="stylesheet" type="text/css" href="index.css">
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="text_anim.js"></script>
 	</head>
 	<body>
-		<div id="wrapper">
-			<div id="header">
+		<div id="block">
+			<div id="wrapper">
+				<div id="text_anim">
+					<div id="firstLine" class="line" style="opacity: 0;">Welcome to the</div>
+					<div id="secondLine" class="line" style="opacity: 0;">Flask chat...</div>
+				</div>
+				<div id="logButtons" style="opacity: 0;">
+					<div class="but_wrapp">
+						<button id="logIn" class="customBut">Log in</button>
+					</div>
+					<div class="but_wrapp">
+						<button id="signIn" class="customBut">Sign up</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
