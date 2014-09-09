@@ -13,6 +13,6 @@ def index():
 @mainview.route("/signup", methods=["POST"])
 def signup():
 	if request.method == "POST":
-		if mainmodel.add_user(request.form):
-			return redirect("/")
+		mainmodel.add_user(request.form)
+		return redirect("/")
 	

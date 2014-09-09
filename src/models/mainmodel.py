@@ -16,10 +16,11 @@ class MainModel(object):
                    passwd=self.passwd, db=self.db)
 
 	def add_user(self, user_form):
+		email = user_form["email"]
 		sql = "INSERT INTO users(nickname, email, password) " +\
 		      "VALUES('{0}', '{1}', '{2}');".format(
 		            user_form["nickname"],
-		            user_form["email"].
+		            email.encode("utf-8"),
 		            user_form["passwd"]
 		            )
 		db = self.conn()
