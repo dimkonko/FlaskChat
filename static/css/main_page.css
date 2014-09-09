@@ -13,11 +13,26 @@
 #secondLine {
 	float: right;
 }
-#logButtons {
+#menubar {
 	width: 800px;
 	float: left;
-	margin: 0 auto;
 	margin-top: 10px;
+}
+#menubar ul {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+	margin: 16px auto;
+}
+#menubar ul li {
+	display: inline-block;
+	float: left;
+	padding: 0 15px;
+	font-size: 18px;
+}
+#menubar ul li:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .line {
