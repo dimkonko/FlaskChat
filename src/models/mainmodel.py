@@ -30,7 +30,6 @@ class MainModel(object):
 		db.close()
 
 	def get_user(self, login_form):
-		print login_form
 		email = login_form["login"]
 		sql = "SELECT nickname, email, password FROM users WHERE email = '{0}'".format(
 			email)

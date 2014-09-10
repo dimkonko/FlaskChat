@@ -1,0 +1,38 @@
+a {
+	text-decoration: none;
+	color: black;
+}
+#wrapper {
+	margin: 0;
+	padding: 0;
+}
+#left_panel {
+    height: 100%;
+    width: 10%;
+    background: #4d4d4d;
+    position:fixed;
+    top:0;
+    left:0;
+    float: left;
+}
+#left_panel ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#left_panel ul a {
+	display: block;
+}
+#left_panel ul li {
+	text-align: center;
+	padding: 4px 5px;
+    color: white;
+}
+#nickname {
+	font-size: 18px;
+}
+
+/* Right panel */
+#right_panel {
+	float: left;
+}

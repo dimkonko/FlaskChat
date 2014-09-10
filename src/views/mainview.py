@@ -12,7 +12,6 @@ def index():
 	isLogedIn = False
 	if "username" in session:
 		isLogedIn = True
-	print isLogedIn
 	return render_template("index.html", isLogedIn=isLogedIn)
 
 @mainview.route("/signup", methods=["POST"])

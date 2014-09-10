@@ -7,5 +7,7 @@ chatview = Blueprint("chatview", __name__,
 @chatview.route("/chat")
 def chat():
 	if 'username' in session:
-		return render_template("chat.html")
+		print session["username"]
+		return render_template("chat.html",
+							   nickname=session["username"])
 	return "You are not logged in"
