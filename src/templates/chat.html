@@ -4,6 +4,9 @@
 		<title>Flask Chat</title>
 
 		<link rel="stylesheet" type="text/css" href="static/css/chat.css">
+
+   		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+		<script type="text/javascript" src="static/js/libs/jquery.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -18,7 +21,7 @@
 			<!-- Start of right panel -->
 			<div id="right_panel">
 				<div id="chat_div">
-					<textarea id="chat_area" readonly="True"></textarea>
+					<textarea id="chat_area" width="100%" height="80%" readonly="True"></textarea>
 				</div>
 				<!-- End of chat div -->
 				<div id="message_div">
@@ -29,5 +32,7 @@
 			</div>
 			<!-- End of right panel -->
 		</div>
+		
+		<script type="text/javascript" src="static/js/chat.js"></script>
 	</body>
 </html>

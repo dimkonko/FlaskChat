@@ -8,12 +8,14 @@ a {
 }
 #left_panel {
     height: 100%;
-    width: 10%;
     background: #4d4d4d;
-    position:fixed;
-    top:0;
-    left:0;
+    position: fixed;
+    top: 0;
+    left: 0;
     float: left;
+    min-width: 100px;
+    max-width: 132px;
+    width: 10%;
 }
 #left_panel ul {
 	list-style: none;
@@ -34,5 +36,27 @@ a {
 
 /* Right panel */
 #right_panel {
+	margin: 0;
+	padding: 0;
 	float: left;
+	position: absolute;
+	top: 0;
+	padding: 5px;
+	margin-left: 132px;
+}
+#chat_div {
+	float: left;
+}
+#chat_area {
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 1000px;
+    height: 100px;
+}
+#message_div {
+	float: left;
+}
+#message_text {
+	width: 940px;
 }
