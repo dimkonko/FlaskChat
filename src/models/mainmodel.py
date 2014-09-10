@@ -28,3 +28,32 @@ class MainModel(object):
 		cursor.execute(sql)
 		db.commit()
 		db.close()
+
+	def get_user(self, login_form):
+		print login_form
+		email = login_form["login"]
+		sql = "SELECT nickname, email, password FROM users WHERE email = '{0}'".format(
+			email)
+
+		db = self.conn()
+		cursor = db.cursor()
+		cursor.execute(sql)
+		data = cursor.fetchall()
+		db.commit()
+		db.close()
+
+		if not data:
+			return False
+
+		user = data[0]
+
+		user_dict = {
+			"nickname": user[0],
+			"email": user[1],
+			"password": user[2]
+		}
+
+		if user_dict["password"] == login_form["passwd"]:
+			return user_dict
+		else:
+			return False

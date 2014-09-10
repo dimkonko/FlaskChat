@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import (Blueprint, render_template, request, redirect,
+				   session)
 
 chatview = Blueprint("chatview", __name__,
 					 template_folder="../templates")
 
 @chatview.route("/chat")
 def chat():
-	return render_template("chat.html")
+	if 'username' in session:
+		return render_template("chat.html")
+	return "You are not logged in"

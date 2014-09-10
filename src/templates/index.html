@@ -22,9 +22,15 @@
 				<!-- Start of menubar -->
 				<div id="menubar" class="anim_obj">
 					<ul>
+						{% if not isLogedIn %}
 						<li id="login_but">Log In</li>
 						<li>|</li>
 						<li id="signup_but">Sign Up</li>
+						{% else %}
+						<li><a href="/chat">Chat</a></li>
+						<li>|</li>
+						<li><a href="/logout">Log Out</a></li>
+						{% endif %}
 						<li>|</li>
 						<li>About</li>
 						<li>|</li>

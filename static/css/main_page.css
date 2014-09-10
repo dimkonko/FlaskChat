@@ -1,3 +1,7 @@
+a {
+	text-decoration: none;
+	color: #404040;
+}
 #wrapper {
 	display: inline-block;
 	width: 800px;
@@ -8,6 +12,7 @@
 	right: 0;
 	left: 0;
 	margin: auto;
+	color: #404040;
 }
 #block {
 	text-align: center;
