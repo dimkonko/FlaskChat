@@ -14,6 +14,16 @@
 				<ul id="settings_but">
 					<a href="/"><li id="nickname">{{ nickname }}</li></a>
 					<a href="/logout"><li>Log Out</li></a>
+					<li>
+						<input id="create_room_name" type="text" />
+						<button id="create_room">Create</button>
+					</li>
+				</ul>
+
+				<ul id="channels">
+					{% for room in rooms %}
+						<li>{{ room }}</li>
+					{% endfor %}
 				</ul>
 			</div>
 			<!-- End of left panel -->
