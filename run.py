@@ -44,7 +44,8 @@ rooms.append(Room("main", "admin"))
 
 @sock.on('connect', namespace='/c')
 def test_connect():
-	join_room("main")
+	session["room"] = "main"
+	join_room(session["room"])
 	if "username" not in session:
 		return
 	emit(
@@ -80,13 +81,21 @@ def on_join(data):
 			emit("join", "This room is already exists")
 			return
 	rooms.append(Room(new_room, username))
-	leave_room("main")
+	leave_room(session["room"])
+	emit(
+		"join",
+		username + " has entered the room " + new_room,
+		broadcast=True,
+		room=session["room"]
+	)
+	session["room"] = new_room
 	join_room(new_room)
 	print "Joined"
 	emit(
 		"join",
 		username + " has entered the room " + new_room,
-		broadcast=False
+		broadcast=False,
+		room=session["room"]
 	)
 
 @sock.on('leave', namespace='/c')
