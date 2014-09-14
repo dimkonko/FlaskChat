@@ -1,61 +1,110 @@
-$(document).ready(function() {
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/c');
+window.onload = function() {
+    var socket = io.connect("http://" + document.domain + ":" + location.port + "/c");
 
-    var chat_area = $('#chat_area'),
-        user_message = $('#message_text'),
-        sendMessageBut = $('#send_message');
+    var chat_area = document.getElementById("chat_area"),
+        user_message = document.getElementById("message_text"),
+        sendMessageBut = document.getElementById("send_message");
 
-    var createRoomName = $("#create_room_name"),
-        createRoomBut = $("#create_room");
+    var createRoomName = document.getElementById("create_room_name"),
+        createRoomBut = document.getElementById("create_room");
 
     var nickname = document.getElementById("nickname").innerHTML;
 
-    var room = "main";
+    var channels = document.getElementById("channels");
 
-    socket.on('my response', function(msg) {
-        console.log(msg)
-        chat_area.append(msg + "\n");
-        chat_area.scrollTop = chat_area.scrollHeight;
+    var room;// = "main";
+    var selected_channel_id, selected_channel;
+
+    /* 
+     * Socket listeners 
+     */
+    socket.on("disconnect", function() {
+        alert("Disconnected");
+        document.location.href="/";
     });
-    socket.on("join", function(msg) {
-        console.log("Join: " + msg);
-        chat_area.append(msg + "\n");
+
+    socket.on("server_response", function(msg) {
+        printMessage(msg);        
     });
-    // $('#send_message').on("click", function(event) {
-    //     socket.emit('my event', {data: $('#message_text').val()});
-    //     return false;
-    // });
-    sendMessageBut.on("click", function(event) {
-        var message = user_message.val();
+    socket.on("get_channels", function(msg) {
+        var channel_names = msg.data;
+        channels.innerHTML = "";
+        for(var i = 0; i < channel_names.length; i++) {
+            var li = document.createElement("li");
+            var new_id = "channel_" + channel_names[i];
+            li.id = "channel_" + channel_names[i];
+
+            if(room == channel_names[i]) {
+                li.style.background = "green";
+            }
+            li.appendChild(document.createTextNode(channel_names[i]));
+            channels.appendChild(li);
+        }
+    });
+
+    channels.onclick = function(event) {
+        var channel = event.target;
+        joinRoom(channel.innerHTML);
+    }
+
+    /*
+     * Event listeners
+     */
+    sendMessageBut.onclick = function() {
+        sendMessage();
+    };
+
+    createRoomBut.onclick = function() {
+        createRoom();
+    };
+
+    user_message.onkeydown = function(event) {
+        if(event.keyCode == "13") {
+            sendMessage();
+        }
+    };
+
+    createRoomName.onkeydown = function(event) {
+        if(event.keyCode == "13") {
+            createRoom();
+        }
+    };
+
+    /*
+     * Functions
+     */
+    function sendMessage() {
+        if(!room) {
+            printMessage("Choose the room if you want to speak.");
+            user_message.value = "";
+            return false;
+        }
+        var message = user_message.value;
 
         if(message) {
-            socket.emit('room msg',
+            socket.emit("room_msg",
                 {"message": message, "room": room}
             );
-            user_message.val("");
-            return false;
+            user_message.value = "";
         }
-    });
+    }
 
-    createRoomBut.on("click", function() {
-        var created_room = createRoomName.val()
+    function createRoom() {
+        var created_room = createRoomName.value;
         if (created_room) {
-            socket.emit("join", {data: created_room})
-            room = created_room;
+            socket.emit("create_room", {data: created_room})
+            joinRoom(created_room);
         };
-    });
+    }
 
-    user_message.keypress(function (e) {
-        if(e.which == "13") {
-            sendMessageBut.click();
-            return false;
-        }
-    });
+    function joinRoom(room_name) {
+        socket.on("leave_room");
+        room = room_name;
+        socket.emit("join", {"room": room_name})
+    }
 
-    createRoomName.keypress(function (e) {
-        if(e.which == "13") {
-            createRoomBut.click();
-            return false;
-        }
-    });
-});
+    function printMessage(msg) {
+        chat_area.value += msg + "\n";
+        chat_area.scrollTop = chat_area.scrollHeight;
+    }
+};

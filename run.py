@@ -9,7 +9,7 @@ from src.views.chatview import chatview
 
 #sys.path.append(u"/home/dimkonko/env/FlaskBlog")
 
-POOL = redis.ConnectionPool(host='10.0.0.1', port=6379, db=0)
+POOL = redis.ConnectionPool(host="10.0.0.1", port=6379, db=0)
 
 os.environ["REDIS_POOL_HOST"] = "0.0.0.0"
 os.environ["REDIS_POOL_PORT"] = "5000"
@@ -42,68 +42,74 @@ class Room(object):
 rooms = list()
 rooms.append(Room("main", "admin"))
 
-@sock.on('connect', namespace='/c')
+@sock.on("connect", namespace="/c")
 def test_connect():
-	session["room"] = "main"
-	join_room(session["room"])
 	if "username" not in session:
 		return
+	update_channels()
 	emit(
-    	'my response', 
-		session["username"] + ' connected to the main room'
+    	"server_response", 
+		"Welcome. Choose the room to enter"
 	)
 
-@sock.on('disconnect', namespace='/c')
+@sock.on("disconnect", namespace="/c")
 def test_disconnect():
-    print('Client disconnected')
+    print "Client disconnected"
 
-@sock.on('room msg', namespace='/c')
+@sock.on("room_msg", namespace="/c")
 def test_message(data):
-	print "Broadcast data: "
-	print data
 	user_room = data["room"]
 	message = data["message"]
 	username = session["username"]
 	emit(
-		"my response",
+		"server_response",
 		username + ": " + message,
 		broadcast=True,
 		room=user_room
 	)
 
-@sock.on('join', namespace='/c')
+@sock.on("create_room", namespace="/c")
 def on_join(data):
-	print data
-	username = session['username']
-	new_room = data['data']
+	username = session["username"]
+	new_room = data["data"]
 	for room in rooms:
 		if new_room == room.name:
 			emit("join", "This room is already exists")
 			return
 	rooms.append(Room(new_room, username))
-	leave_room(session["room"])
-	emit(
-		"join",
-		username + " has entered the room " + new_room,
-		broadcast=True,
-		room=session["room"]
-	)
+
+@sock.on("join", namespace="/c")
+def on_join(data):
+	new_room = data["room"]
 	session["room"] = new_room
+
 	join_room(new_room)
-	print "Joined"
+	update_channels()
 	emit(
-		"join",
-		username + " has entered the room " + new_room,
+		"server_response",
+		session["username"] + " has entered the room " + new_room,
 		broadcast=False,
-		room=session["room"]
+		room=new_room
 	)
 
-@sock.on('leave', namespace='/c')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
+@sock.on("leave_room", namespace="/c")
+def on_leave():
+    username = session["username"]
+    room = session["room"]
+    emin(
+    	"server_response",
+    	username + " has left the room " + room,
+    	room=room
+    )
     leave_room(room)
-    send(username + ' has left the room ' + room, room=room)
+
+def update_channels():
+	channels = [r.name for r in rooms]
+	emit(
+		"get_channels",
+		{"data": channels},
+		broadcast=True
+	)
 
 
 if __name__ == "__main__":

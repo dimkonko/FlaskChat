@@ -6,7 +6,8 @@
 		<link rel="stylesheet" type="text/css" href="static/css/chat.css">
 
    		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
-		<script type="text/javascript" src="static/js/libs/jquery.js"></script>
+
+		<script type="text/javascript" src="static/js/chat.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -20,11 +21,7 @@
 					</li>
 				</ul>
 
-				<ul id="channels">
-					{% for room in rooms %}
-						<li>{{ room }}</li>
-					{% endfor %}
-				</ul>
+				<ul id="channels"></ul>
 			</div>
 			<!-- End of left panel -->
 
@@ -42,7 +39,5 @@
 			</div>
 			<!-- End of right panel -->
 		</div>
-		
-		<script type="text/javascript" src="static/js/chat.js"></script>
 	</body>
 </html>

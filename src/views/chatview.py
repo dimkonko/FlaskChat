@@ -10,9 +10,9 @@ model = ChatModel()
 @chatview.route("/chat")
 def chat():
 	if 'username' in session:
-		return render_template("chat.html",
-				nickname=session["username"],
-				rooms=model.get_rooms()
-		   		)
+		return render_template(
+				"chat.html",
+				nickname=session["username"]
+   		)
 	#return "You are not logged in"
 	return redirect("/")

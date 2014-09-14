@@ -33,6 +33,11 @@ a {
 #nickname {
 	font-size: 18px;
 }
+#channels li:hover {
+	cursor: pointer;
+	/*background-color: #ca0fd2;*/
+	background-color: green;
+}
 
 /* Right panel */
 #right_panel {
@@ -59,4 +64,8 @@ a {
 }
 #message_text {
 	width: 940px;
+}
+
+.selected_channel {
+	background-color: green;
 }
