@@ -1,17 +1,8 @@
-import os
-import redis
-
 from usermodel import UserModel
 
 class MainModel(object):
 	def __init__(self):
-		
 		self.user = UserModel()
-		self.add_user({
-			"nickname": "a",
-			"email": "emailasd",
-			"password": "a"
-		})
 
 	def add_user(self, user_form):
 		is_exists = self.user.is_exists(user_form["nickname"],

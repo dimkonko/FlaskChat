@@ -1,4 +1,4 @@
 FlaskChat
 =========
 
-Simple web socket chat on Flask microframework
+Flask chat with socketio sockets

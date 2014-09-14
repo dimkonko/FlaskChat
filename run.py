@@ -1,6 +1,5 @@
 import sys
 import os
-import redis
 from flask import Flask, session
 from flask.ext.socketio import SocketIO, emit, join_room, leave_room, send
 
@@ -9,22 +8,13 @@ from src.views.chatview import chatview
 
 #sys.path.append(u"/home/dimkonko/env/FlaskBlog")
 
-POOL = redis.ConnectionPool(host="10.0.0.1", port=6379, db=0)
-
-os.environ["REDIS_POOL_HOST"] = "0.0.0.0"
-os.environ["REDIS_POOL_PORT"] = "5000"
-os.environ["REDIS_POOL_DB"] = "0"
-
 app = Flask(__name__)
 app.secret_key = os.urandom(27)
 
 app.register_blueprint(mainview)
 app.register_blueprint(chatview)
 
-app.debug = True
-
 sock = SocketIO(app)
-
 
 class Room(object):
     def __init__(self, name, owner):
@@ -112,5 +102,5 @@ def update_channels():
 	)
 
 
-if __name__ == "__main__":
-    sock.run(app)
+port = int(os.environ.get("PORT", 5000))
+sock.run(app, host="0.0.0.0", port=port)
