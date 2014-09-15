@@ -1,12 +1,9 @@
 <!doctype html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="static/css/modal.css">
 		<link rel="stylesheet" type="text/css" href="static/css/main_page.css">
 
 		<script type="text/javascript" src="static/js/libs/jquery.js"></script>
-		<script type="text/javascript" src="static/js/libs/modal.js"></script>
-
 		<script type="text/javascript" src="static/js/main_page.js"></script>
 	</head>
 	<body>
@@ -23,9 +20,9 @@
 				<div id="menubar" class="anim_obj">
 					<ul>
 						{% if not isLogedIn %}
-						<li id="login_but">Log In</li>
+						<a href="/login"><li>Log In</li></a>
 						<li>|</li>
-						<li id="signup_but">Sign Up</li>
+						<a href="/signup"><li >Sign Up</li>
 						{% else %}
 						<li><a href="/chat">Chat</a></li>
 						<li>|</li>
@@ -41,28 +38,29 @@
 			</div>
 			<!-- End of wrapper -->
 		</div>
-
+<!-- 
 		<div id="login_modal" class="modal_form">
 			<form method="POST" action="/login">
+				<div class="err_msg"></div>
 				Login:
 				<br><input type="text" name="login" class="field" />
 				<br>Password:
 				<br><input type="password" name="passwd" class="field" />
-				<br><button id="login_but" class="modal_button" type="submit">Add</button>
+				<br><button id="modal_login_but" class="modal_button">Add</button>
 			</form>
 		</div>
 		<div id="signup_modal" class="modal_form">
-			<form method="POST" action="/signup">
-				Nickname:
-				<br><input type="text" name="nickname" class="field" />
-				<br>Email:
-				<br><input type="text" name="email" class="field" />
-				<br>Password:
-				<br><input type="password" class="field" />
-				<br>Repeat Password:
-				<br><input type="password" name="passwd" class="field" />
-				<br><button id="signup_but" type="submit" class="modal_button">Add</button>
-			</form>
-		</div>
+			<div id="signup_error_msg" class="error_msg">Error msg</div>
+			Nickname:
+			<br><input type="text" name="nickname" class="field" />
+			<br>Email:
+			<br><input type="text" name="email" class="field" />
+			<br>Password:
+			<br><input type="password" class="field" />
+			<br>Repeat Password:
+			<br><input type="password" name="passwd" class="field" />
+			<br><input id="hash" class="field" hidden/>
+			<br><button id="modal_signup_but" class="modal_button">Add</button>
+		</div> -->
 	</body>
 </html>

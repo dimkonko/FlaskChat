@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Sign in</title>
+
+		<link rel="stylesheet" type="text/css" href="static/css/ui.css">
+		<link rel="stylesheet" type="text/css" href="static/css/signup.css">
+
+		<script type="text/javascript" src="static/js/libs/jquery.js"></script>
+		<script type="text/javascript" src="static/js/libs/sha3.js"></script>
+		<script type="text/javascript" src="static/js/login.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<h2 id="title">Please sign in</h2>
+			<div id="error_msg" class="error_msg"></div>
+			<form id="form_signup" method="POST" action="/login">
+				<input id="inp_email" name="email" type="email" placeholder="Email address" required autofocus value="dimkonko@gmail.com" /><br />
+				<input id="hash" type="password" placeholder="Password" required value="12345" /><br />
+				<button id="but_signup" class="form_button" type="submit">Sign Up</button>
+			</form>
+		</div>
+	</body>
+</html>
