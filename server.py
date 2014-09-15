@@ -1,12 +1,37 @@
+import time
 
-from flask_app import app
+from threading import Thread
 from flask import session
 from flask.ext.socketio import SocketIO, emit, join_room, leave_room, send
 
+from flask_app import app
+from src.models.newsmodel import NewsModel
+
+
 sock = SocketIO(app)
 
-rooms = list()
-rooms.append("main")    
+rooms = ["main", "news"]
+
+
+def background_thread():
+	count = 0
+	news_model = NewsModel()
+	while True:
+		time.sleep(5)
+		count += 1
+		news = news_model.get_rand_news()
+		news = "Server: " + news["title"] + ".\nCheck it out: " +\
+				news["link"]
+		print "Sending news: " + news
+		sock.emit(
+			'server_response',
+            {'news': news, 'count': count},
+            namespace='/c', room="news"
+        )
+
+thread = Thread(target=background_thread)
+thread.start()
+
 
 @sock.on("connect", namespace="/c")
 def test_connect():
@@ -39,7 +64,7 @@ def on_join(data):
 	username = session["username"]
 	new_room = data["data"]
 	for room in rooms:
-		if new_room == room.name:
+		if new_room == room:
 			emit("join", "This room is already exists")
 			return
 	rooms.append(new_room)
@@ -86,8 +111,7 @@ def update_channels(msg):
 	get_channels()
 
 def get_channels():
-	"""
-	channels = [r.name for r in rooms]
+	channels = [r for r in rooms]
 	emit(
 		"get_channels",
 		{"data": channels},

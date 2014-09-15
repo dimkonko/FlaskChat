@@ -32,7 +32,11 @@ window.onload = function() {
     });
 
     socket.on("server_response", function(msg) {
-        printMessage(msg);        
+        if(msg.news){
+            printMessage(msg.news)
+            return false;
+        }
+        printMessage(msg);
     });
     socket.on("get_channels", function(msg) {
         /* Checks for newly created channels.
@@ -68,7 +72,6 @@ window.onload = function() {
 
     channels.onclick = function(event) {
         var channel = event.target;
-        console.log(channel.innerHTML);
         joinRoom(channel.innerHTML);
     }
 
