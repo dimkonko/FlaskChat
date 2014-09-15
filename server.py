@@ -22,7 +22,7 @@ rooms.append(Room("main", "admin"))
 def test_connect():
 	if "username" not in session:
 		return
-	update_channels()
+	get_channels()
 	emit(
     	"server_response", 
 		"Welcome. Choose the room to enter"
@@ -60,7 +60,7 @@ def on_join(data):
 	session["room"] = new_room
 
 	join_room(new_room)
-	update_channels()
+	get_channels()
 	emit(
 		"server_response",
 		session["username"] + " has entered the room " + new_room,
@@ -79,7 +79,23 @@ def on_leave():
     )
     leave_room(room)
 
-def update_channels():
+@sock.on("search_channel", namespace="/c")
+def search_channel(msg):
+	channels = list()
+	for room in rooms:
+		if msg == room.name:
+			channels.append()
+	emit(
+		"get_channels",
+		{"data": channels},
+		broadcast=False
+	)
+
+@sock.on("update_channels", namespace="/c")
+def update_channels(msg):
+	get_channels()
+
+def get_channels():
 	channels = [r.name for r in rooms]
 	emit(
 		"get_channels",

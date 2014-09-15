@@ -1,5 +1,5 @@
 window.onload = function() {
-    var formSignup = document.getElementById("form_signup"),
+    var formSignup = document.getElementById("form_signin"),
     	inpPasswd = document.getElementById("hash");
 
     var errorMsg = $("#error_msg").hide();

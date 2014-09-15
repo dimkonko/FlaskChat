@@ -44,6 +44,7 @@ window.onload = function() {
 
     channels.onclick = function(event) {
         var channel = event.target;
+        console.log(channel.innerHTML);
         joinRoom(channel.innerHTML);
     }
 
@@ -54,19 +55,13 @@ window.onload = function() {
         sendMessage();
     };
 
-    createRoomBut.onclick = function() {
-        createRoom();
-    };
+    // createRoomBut.onclick = function() {
+    //     createRoom();
+    // };
 
     user_message.onkeydown = function(event) {
         if(event.keyCode == "13") {
             sendMessage();
-        }
-    };
-
-    createRoomName.onkeydown = function(event) {
-        if(event.keyCode == "13") {
-            createRoom();
         }
     };
 
@@ -87,6 +82,21 @@ window.onload = function() {
             );
             user_message.value = "";
         }
+    }
+
+    var inpSearch = document.getElementById("inp_channels_search"),
+        butSearch = document.getElementById("but_channels_search");
+
+    inpSearch.onchange = function() {
+        var searchedChannel = inpSearch.value;
+        var socketRoute = "";
+        if(searchedChannel.length > 0) {
+            socketRoute = "search_channel";
+        } else {
+            socketRoute = "update_channels";
+        }
+        console.log(socketRoute);
+        socket.emit(socketRoute, searchedChannel);
     }
 
     function createRoom() {

@@ -41,6 +41,7 @@ def login():
 		return redirect("/")
 	if request.method == "POST":
 		nickname = mainmodel.get_user(request.form)
+		print nickname
 		if nickname:
 			session["username"] = nickname
 			return jsonify({
@@ -48,7 +49,7 @@ def login():
 				})
 		else:
 			return jsonify({
-				"error_msg": "This nickname or email is already exists"
+				"error_msg": "Wrong email or password"
 			})
 	return render_template("login.html")
 

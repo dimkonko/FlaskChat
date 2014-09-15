@@ -1,53 +1,95 @@
+body {
+	font-style: Helvetica, Arial, monospace
+}
 a {
 	text-decoration: none;
-	color: black;
+	color: inherit;
 }
-#wrapper {
-	margin: 0;
-	padding: 0;
+
+#panel_left {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 200px;
+	background-color: #2B6FED;
+	color: white;
 }
-#left_panel {
-    height: 100%;
-    background: #4d4d4d;
-    position: fixed;
-    top: 0;
-    left: 0;
-    float: left;
-    min-width: 100px;
-    max-width: 132px;
-    width: 10%;
+#nickname_wrapper {
+	border-bottom: 3px solid #333;
+	padding-bottom: 5px;
 }
-#left_panel ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-#left_panel ul a {
+#logout {
 	display: block;
+	width: 100%;
+	padding: 8px 0;
 }
-#left_panel ul li {
-	text-align: center;
-	padding: 4px 5px;
-    color: white;
+#logout span {
+	margin-left: 10px;
+}
+#logout:hover {
+	cursor: pointer;
+	background-color: green;
 }
 #nickname {
-	font-size: 18px;
+	display: block;
+	text-align: center;
+	font-size: 1.4em;
+	padding: 10px 0;
+	width: 100%;
+}
+#channels_wrapper {
+	margin-top: 20px;
+}
+#channels_title {
+	margin-left: 20px;
+	font-size: 1.3em;
+}
+#channels_search_wrapper {
+	margin: 5px 2px;
+	width: 200px;
+}
+#inp_channels_search {
+	width: 160px;
+}
+#but_channels_search {
+	float: right;
+	width: 22px;
+	height: 25px;
+	margin-right: 10px;
+	background-repeat: no-repeat;
+}
+#but_channels_search:hover {
+	cursor: pointer;
+}
+#channels {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin-top: 5px;
+	overflow: auto;
+}
+#channels li {
+	font-size: 1.1em;
+	display: block;
+	padding: 8px 0;
+	width: 190px;
+	padding-left: 10px;
 }
 #channels li:hover {
 	cursor: pointer;
-	/*background-color: #ca0fd2;*/
 	background-color: green;
 }
 
-/* Right panel */
-#right_panel {
-	margin: 0;
-	padding: 0;
-	float: left;
+/* 
+ * Right panel
+ */
+#panel_right {
 	position: absolute;
 	top: 0;
-	padding: 5px;
-	margin-left: 132px;
+	left: 200px;
+	width: 900px;
+	margin: 5px;
 }
 #chat_div {
 	float: left;
@@ -56,16 +98,20 @@ a {
 	-webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
-    width: 1000px;
-    height: 300px;
+	width: 900px;
+    height: 460px;
 }
 #message_div {
 	float: left;
 }
 #message_text {
-	width: 940px;
+	font-weight: 1.4em;
+	padding: 4px 0;
+	width: 825px;
 }
-
+#send_message {
+	padding: 4px 10px;
+}
 .selected_channel {
 	background-color: green;
 }
