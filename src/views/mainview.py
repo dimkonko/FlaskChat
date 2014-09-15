@@ -10,12 +10,18 @@ mainmodel = MainModel()
 @mainview.route("/")
 def index():
 	isLogedIn = False
+	isAdmin = False
 	if "username" in session:
 		isLogedIn = True
-	return render_template("index.html", isLogedIn=isLogedIn)
+		if session["username"] == "admin":
+			isAdmin = True
+	return render_template("index.html",
+			isLogedIn=isLogedIn, isAdmin=True)
 
 @mainview.route("/signup", methods=["GET", "POST"])
 def signup():
+	if "username" in session:
+		return redirect("/")
 	if request.method == "POST":
 		if mainmodel.add_user(request.form):
 			#session["username"] = request.form["nickname"]
@@ -31,6 +37,8 @@ def signup():
 
 @mainview.route("/login", methods=["GET", "POST"])
 def login():
+	if "username" in session:
+		return redirect("/")
 	if request.method == "POST":
 		nickname = mainmodel.get_user(request.form)
 		if nickname:

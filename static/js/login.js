@@ -1,13 +1,13 @@
 window.onload = function() {
     var formSignup = document.getElementById("form_signup"),
-    	passwd = document.getElementById("hash");
+    	inpPasswd = document.getElementById("hash");
 
     var errorMsg = $("#error_msg").hide();
 
     formSignup.onsubmit = function(event) {
         event.preventDefault();
         console.log("Submiting...");
-        var hash = CryptoJS.SHA3(passwd.value).toString();
+        var hash = CryptoJS.SHA3(inpPasswd.value).toString();
         sendData(
             document.getElementById("inp_email").value,
             hash

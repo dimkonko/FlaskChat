@@ -1,8 +1,8 @@
 window.onload = function() {
-	
-	$("#firstLine").fadeTo(0, 1, function() {
-		$("#secondLine").fadeTo(0, 1, function() {
-			$("#menubar").fadeTo(0, 1);
+	var anim_delay = 0;
+	$("#firstLine").fadeTo(anim_delay, 1, function() {
+		$("#secondLine").fadeTo(anim_delay, 1, function() {
+			$("#menubar").fadeTo(anim_delay, 1);
 		})
 	});
 }

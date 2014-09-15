@@ -57,7 +57,7 @@ a {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
     width: 1000px;
-    height: 100px;
+    height: 300px;
 }
 #message_div {
 	float: left;

@@ -1,19 +1,35 @@
 window.onload = function() {
+    var minPasswdLength = 5;
+
     var formSignup = document.getElementById("form_signup");
 
-    var passwd = document.getElementById("inp_repeat_passwd"),
+    var inpPasswd = document.getElementById("inp_passwd")
+        inpRepeatpasswd = document.getElementById("inp_repeat_passwd"),
         inpHash = document.getElementById("hash");
 
     var errorMsg = $("#error_msg").hide();
 
     formSignup.onsubmit = function(event) {
         event.preventDefault();
-        var hash = CryptoJS.SHA3(passwd.value).toString();
-        sendData(
-            document.getElementById("inp_email").value,
-            document.getElementById("inp_nickname").value,
-            hash
-        );
+
+        var passwd = inpPasswd.value;
+        var repeatedPasswd = inpRepeatpasswd.value;
+
+        if(repeatedPasswd.length <= minPasswdLength) {
+            showError("Password can't be less than " + minPasswdLength +
+                " symbols");
+            return false;
+        }
+        if(passwd == repeatedPasswd) {  
+            var hash = CryptoJS.SHA3(inpRepeatpasswd.value).toString();
+            sendData(
+                document.getElementById("inp_email").value,
+                document.getElementById("inp_nickname").value,
+                hash
+            );
+        } else {
+            showError("Passwords do not match");
+        }
         return false;
     }
 
