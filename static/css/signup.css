@@ -6,18 +6,18 @@ body {
 	margin: 30px auto;
 	color: #333;
 }
-#title {
-	font-size: 30px;
-	font-family: Helvatica, Arial, sans-serif;
-	margin-bottom: 10px;
-}
 #wrapper form input {
 	color: #555;
 	width: 94%;
 	font-size: 1em;
 	padding: 6px;	
 }
-#but_signup {
+.title {
+	font-size: 30px;
+	font-family: Helvatica, Arial, sans-serif;
+	margin-bottom: 10px;
+}
+.but_submit {
 	margin-top: 10px;
 	width: 100%;
 }

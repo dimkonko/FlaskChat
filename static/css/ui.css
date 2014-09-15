@@ -15,12 +15,12 @@
 	border: none;
 	color: white;
 }
-
 .form_button:hover {
 	background: #116BFA;
 	text-decoration: none;
 	cursor: pointer;
 }
+
 .error_msg {
 	margin: 5px auto;
 	padding: 5px;

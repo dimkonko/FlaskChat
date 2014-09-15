@@ -12,6 +12,9 @@ window.onload = function() {
 
     var channels = document.getElementById("channels");
 
+    var inpSearch = document.getElementById("inp_channels_search"),
+        butSearch = document.getElementById("but_channels_search");
+
     var room;// = "main";
     var selected_channel_id, selected_channel;
 
@@ -42,12 +45,6 @@ window.onload = function() {
         }
     });
 
-    channels.onclick = function(event) {
-        var channel = event.target;
-        console.log(channel.innerHTML);
-        joinRoom(channel.innerHTML);
-    }
-
     /*
      * Event listeners
      */
@@ -55,15 +52,21 @@ window.onload = function() {
         sendMessage();
     };
 
-    // createRoomBut.onclick = function() {
-    //     createRoom();
-    // };
-
     user_message.onkeydown = function(event) {
         if(event.keyCode == "13") {
             sendMessage();
         }
     };
+
+    channels.onclick = function(event) {
+        var channel = event.target;
+        console.log(channel.innerHTML);
+        joinRoom(channel.innerHTML);
+    }
+
+    // createRoomBut.onclick = function() {
+    //     createRoom();
+    // };
 
     /*
      * Functions
@@ -83,9 +86,6 @@ window.onload = function() {
             user_message.value = "";
         }
     }
-
-    var inpSearch = document.getElementById("inp_channels_search"),
-        butSearch = document.getElementById("but_channels_search");
 
     inpSearch.onchange = function() {
         var searchedChannel = inpSearch.value;
