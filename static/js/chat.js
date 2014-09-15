@@ -5,8 +5,11 @@ window.onload = function() {
         user_message = document.getElementById("message_text"),
         sendMessageBut = document.getElementById("send_message");
 
-    var createRoomName = document.getElementById("create_room_name"),
-        createRoomBut = document.getElementById("create_room");
+    var butOpenCreateRoomModal = document.getElementById("create_room"),
+        inpCreateRoom = document.getElementById("inp_create_room"),
+        butCreateRoom = document.getElementById("but_create_room");
+
+    var createRoomModal = new Modal(document.getElementById("create_room_modal"));
 
     var nickname = document.getElementById("nickname").innerHTML;
 
@@ -14,6 +17,8 @@ window.onload = function() {
 
     var inpSearch = document.getElementById("inp_channels_search"),
         butSearch = document.getElementById("but_channels_search");
+
+    var noSymbolsPattern = /^[\w&.-]+$/;
 
     var room;// = "main";
     var selected_channel_id, selected_channel;
@@ -30,6 +35,10 @@ window.onload = function() {
         printMessage(msg);        
     });
     socket.on("get_channels", function(msg) {
+        /* Checks for newly created channels.
+        Adds id, that manage clicks on this channels.
+        Make current room selected
+        */
         var channel_names = msg.data;
         channels.innerHTML = "";
         for(var i = 0; i < channel_names.length; i++) {
@@ -53,9 +62,8 @@ window.onload = function() {
     };
 
     user_message.onkeydown = function(event) {
-        if(event.keyCode == "13") {
+        if(enterKeyPressed)
             sendMessage();
-        }
     };
 
     channels.onclick = function(event) {
@@ -64,30 +72,12 @@ window.onload = function() {
         joinRoom(channel.innerHTML);
     }
 
-    // createRoomBut.onclick = function() {
-    //     createRoom();
-    // };
-
-    /*
-     * Functions
-     */
-    function sendMessage() {
-        if(!room) {
-            printMessage("Choose the room if you want to speak.");
-            user_message.value = "";
-            return false;
-        }
-        var message = user_message.value;
-
-        if(message) {
-            socket.emit("room_msg",
-                {"message": message, "room": room}
-            );
-            user_message.value = "";
-        }
-    }
-
     inpSearch.onchange = function() {
+        /* Gets value from inpSearch and choose
+        the route
+        if input is emptt -> gets all channels
+        else -> search channels
+        */
         var searchedChannel = inpSearch.value;
         var socketRoute = "";
         if(searchedChannel.length > 0) {
@@ -95,26 +85,82 @@ window.onload = function() {
         } else {
             socketRoute = "update_channels";
         }
-        console.log(socketRoute);
         socket.emit(socketRoute, searchedChannel);
     }
 
-    function createRoom() {
-        var created_room = createRoomName.value;
-        if (created_room) {
-            socket.emit("create_room", {data: created_room})
-            joinRoom(created_room);
+    butOpenCreateRoomModal.onclick = function() {
+        createRoomModal.show();
+    };
+
+    butCreateRoom.onclick = function() {
+        closeCreateRoomModal();
+    }
+
+    inpCreateRoom.onkeydown = function(event) {
+        if(enterKeyPressed(event))
+            closeCreateRoomModal();
+    }
+
+    /*
+     * Functions
+     */
+    function enterKeyPressed(event) {
+        if(event.keyCode == "13")
+            return true;
+    }
+
+    function sendMessage() {
+        if(!room) {
+            printMessage("Choose the room if you want to speak.");
+            user_message.value = "";
+            return false;
+        }
+
+        var message = user_message.value;
+
+        if(message.length > 0) {
+            socket.emit("room_msg",
+                {"message": message, "room": room}
+            );
+            user_message.value = "";
+        }
+    }
+
+    function createRoom(room_name) {
+        if (room_name.length > 0) {
+            if(noSymbolsPattern.test(room_name)) {
+                socket.emit("create_room", {data: room_name})
+                joinRoom(room_name);
+                return true;
+            } else {
+                alert("Name should have only letters and numbers");
+            }
         };
     }
 
     function joinRoom(room_name) {
+        /* This function send leave request to
+        "leave_room" route, change @param room to
+        room name and join the new room with new 
+        room name
+        */
+        inpSearch.value = "";
         socket.on("leave_room");
         room = room_name;
         socket.emit("join", {"room": room_name})
     }
 
     function printMessage(msg) {
+        /* Append strings to textarea and
+        scroll it down.
+        */
         chat_area.value += msg + "\n";
         chat_area.scrollTop = chat_area.scrollHeight;
+    }
+    function closeCreateRoomModal() {
+        if(createRoom(inpCreateRoom.value)) {
+            inpCreateRoom.value = "";
+            createRoomModal.close();
+        }
     }
 };

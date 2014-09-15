@@ -3,17 +3,19 @@
 	<head>
 		<title>Flask Chat</title>
 
+		<link rel="stylesheet" type="text/css" href="static/css/modal.css">
 		<link rel="stylesheet" type="text/css" href="static/css/ui.css">
 		<link rel="stylesheet" type="text/css" href="static/css/chat.css">
 
    		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
-
+   		<script type="text/javascript" src="static/js/libs/modal.js"></script>
 		<script type="text/javascript" src="static/js/chat.js"></script>
 	</head>
 	<body>
 		<div id="panel_left">
 			<div id="nickname_wrapper">
 				<a id="nickname" href="/">{{ nickname }}</a>
+				<a id="create_room"><span>Create room<span></a>
 				<a id="logout" href="/logout"><span>Log out<span></a>
 			</div>
 			<div id="channels_wrapper">
@@ -40,5 +42,11 @@
 			<!-- End of messasge div -->
 		</div>
 		<!-- End of right panel -->
+
+		<div id="create_room_modal" class="modal_form">
+			Room name:<br />
+			<input id="inp_create_room" class="modal_field" type="text"><br />
+			<button id="but_create_room" class="form_button">Create</button>
+		</div>
 	</body>
 </html>

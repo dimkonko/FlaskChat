@@ -41,7 +41,6 @@ def login():
 		return redirect("/")
 	if request.method == "POST":
 		nickname = mainmodel.get_user(request.form)
-		print nickname
 		if nickname:
 			session["username"] = nickname
 			return jsonify({

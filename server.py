@@ -3,20 +3,10 @@ from flask_app import app
 from flask import session
 from flask.ext.socketio import SocketIO, emit, join_room, leave_room, send
 
-class Room(object):
-    def __init__(self, name, owner):
-        self.name = name
-        self.owner = owner
-        self.users = list()
-
-    def add_user(self, user):
-        self.users.append(user)
-
-
 sock = SocketIO(app)
 
 rooms = list()
-rooms.append(Room("main", "admin"))    
+rooms.append("main")    
 
 @sock.on("connect", namespace="/c")
 def test_connect():
@@ -52,7 +42,7 @@ def on_join(data):
 		if new_room == room.name:
 			emit("join", "This room is already exists")
 			return
-	rooms.append(Room(new_room, username))
+	rooms.append(new_room)
 
 @sock.on("join", namespace="/c")
 def on_join(data):
@@ -83,8 +73,8 @@ def on_leave():
 def search_channel(msg):
 	channels = list()
 	for room in rooms:
-		if msg == room.name:
-			channels.append()
+		if msg in room.name:
+			channels.append(room.name)
 	emit(
 		"get_channels",
 		{"data": channels},
@@ -96,6 +86,7 @@ def update_channels(msg):
 	get_channels()
 
 def get_channels():
+	"""
 	channels = [r.name for r in rooms]
 	emit(
 		"get_channels",

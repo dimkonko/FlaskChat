@@ -19,19 +19,24 @@ var Modal = function(modalDiv) {
 		isModalOpen = true;
 	}
 
-	function close(event) {
-		/*
-		 * Closing modal when clicked outside the modal window
-		 */
-		if(event.target.id == "main_modal" && isModalOpen) {
-			modalDiv.style.visibility = "hidden";
-			isModalOpen = false;
-		}
+	function hide() {
+		modalDiv.style.visibility = "hidden";
+		isModalOpen = false;
+	}
+
+	function close() {
+		modalDiv.style.visibility = "hidden";
+		isModalOpen = false;
 	}
 
 	modalDiv = init();
 	modalDiv.onclick = function(event) {
-		close(event);
+		/*
+		 * Closing modal when clicked outside the modal window
+		 */
+		if(event.target.id == "main_modal" && isModalOpen) {
+			close();
+		}
 	}
 
 	return {
