@@ -19,8 +19,9 @@ def signup():
 	if request.method == "POST":
 		if mainmodel.add_user(request.form):
 			#session["username"] = request.form["nickname"]
+			session["username"] = request.form["nickname"]
 			return jsonify({
-				"redirect": "/"
+				"redirect": "/chat"
 			})
 		else:
 			return jsonify({
