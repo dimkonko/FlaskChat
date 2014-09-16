@@ -45,7 +45,6 @@ window.onload = function() {
             cache: false,
             async:false,
             success: function(data) {
-                console.log(data);
                 if(data.error_msg) {
                     showError(data.error_msg);
                 } else {

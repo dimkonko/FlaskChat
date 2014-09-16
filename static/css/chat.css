@@ -25,7 +25,7 @@ a {
 	width: 100%;
 	padding: 8px 0;
 }
-#nickname_wrapper a span {
+#nickname_wrapper span {
 	margin-left: 10px;
 }
 #nickname_wrapper a:hover {
@@ -52,6 +52,7 @@ a {
 }
 #inp_channels_search {
 	width: 160px;
+	margin-left: 2px;
 }
 #but_channels_search {
 	float: right;
@@ -68,7 +69,7 @@ a {
 	margin: 0;
 	padding: 0;
 	margin-top: 5px;
-	overflow: auto;
+    overflow-y: auto;
 }
 #channels li {
 	font-size: 1.1em;
@@ -86,32 +87,50 @@ a {
  * Right panel
  */
 #panel_right {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 200px;
 	width: 900px;
-	margin: 5px;
+	margin-top: 10px;
+	margin-left: 30px;
+	padding: 5px;
 }
-#chat_div {
+#messages_wrapper {
 	float: left;
-}
-#chat_area {
 	-webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 	width: 900px;
     height: 460px;
+    overflow-y: auto;
 }
-#message_div {
+#send_message_wrapper {
 	float: left;
 }
-#message_text {
+#send_message_text {
 	font-weight: 1.4em;
 	padding: 4px 0;
-	width: 825px;
+	width: 810px;
 }
 #send_message {
 	padding: 4px 10px;
+}
+
+.message {
+	padding: 5px;
+	margin: 5px 0;
+	width: 500px;
+}
+.message_text {
+	margin-top: 5px;
+}
+.message_text a {
+	color: #2B587A;
+	white-space: pre-wrap;
+	overflow-x: hidden;
+}
+.message_text a:hover {
+	text-decoration: underline;
 }
 .selected_channel {
 	background-color: green;

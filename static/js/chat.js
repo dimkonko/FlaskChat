@@ -1,9 +1,9 @@
 window.onload = function() {
     var socket = io.connect("http://" + document.domain + ":" + location.port + "/c");
 
-    var chat_area = document.getElementById("chat_area"),
-        user_message = document.getElementById("message_text"),
-        sendMessageBut = document.getElementById("send_message");
+    var chat_area = document.getElementById("messages_wrapper"),
+        user_message = document.getElementById("send_message_text"),
+        sendMessageBut = document.getElementById("send_message_but");
 
     var butOpenCreateRoomModal = document.getElementById("create_room"),
         inpCreateRoom = document.getElementById("inp_create_room"),
@@ -32,11 +32,7 @@ window.onload = function() {
     });
 
     socket.on("server_response", function(msg) {
-        if(msg.news){
-            printMessage(msg.news)
-            return false;
-        }
-        printMessage(msg);
+        printMessage(msg.owner + ":", msg.text)
     });
     socket.on("get_channels", function(msg) {
         /* Checks for newly created channels.
@@ -66,8 +62,9 @@ window.onload = function() {
     };
 
     user_message.onkeydown = function(event) {
-        if(enterKeyPressed)
+        if(event.keyCode == "13") {
             sendMessage();
+        }
     };
 
     channels.onclick = function(event) {
@@ -75,20 +72,16 @@ window.onload = function() {
         joinRoom(channel.innerHTML);
     }
 
-    inpSearch.onchange = function() {
+    inpSearch.onkeydown = function(event) {
         /* Gets value from inpSearch and choose
         the route
         if input is emptt -> gets all channels
         else -> search channels
         */
-        var searchedChannel = inpSearch.value;
-        var socketRoute = "";
-        if(searchedChannel.length > 0) {
-            socketRoute = "search_channel";
-        } else {
-            socketRoute = "update_channels";
-        }
-        socket.emit(socketRoute, searchedChannel);
+        searchRoom();
+    }
+    butSearch.onclick = function() {
+        searchRoom();
     }
 
     butOpenCreateRoomModal.onclick = function() {
@@ -100,21 +93,27 @@ window.onload = function() {
     }
 
     inpCreateRoom.onkeydown = function(event) {
-        if(enterKeyPressed(event))
+        if(event.keyCode == "13") {
             closeCreateRoomModal();
+        }
     }
 
     /*
      * Functions
      */
-    function enterKeyPressed(event) {
-        if(event.keyCode == "13")
-            return true;
+    function searchRoom() {
+        var searchedChannel = inpSearch.value;
+        var socketRoute = "";
+        if(searchedChannel.length > 0) {
+            socketRoute = "search_channel";
+        } else {
+            socketRoute = "update_channels";
+        }
+        socket.emit(socketRoute, searchedChannel);
     }
-
     function sendMessage() {
         if(!room) {
-            printMessage("Choose the room if you want to speak.");
+            printMessage("Server", "Choose the room if you want to speak.");
             user_message.value = "";
             return false;
         }
@@ -153,11 +152,29 @@ window.onload = function() {
         socket.emit("join", {"room": room_name})
     }
 
-    function printMessage(msg) {
+    function printMessage(owner, msg) {
         /* Append strings to textarea and
         scroll it down.
         */
-        chat_area.value += msg + "\n";
+        var new_message = document.createElement('div');
+        new_message.className = "message";
+
+        var br = document.createElement("br");
+
+        var msg_owner = document.createElement('div');
+        msg_owner.className = "message_owner";
+        msg_owner.appendChild(document.createTextNode(owner))
+
+        var msg_text = document.createElement("div");
+        msg_text.className = "message_text";
+        msg_text.innerHTML = msg;
+
+        new_message.appendChild(msg_owner);
+        new_message.appendChild(br);
+        new_message.appendChild(msg_text)
+        new_message.appendChild(br);
+        
+        chat_area.appendChild(new_message)
         chat_area.scrollTop = chat_area.scrollHeight;
     }
     function closeCreateRoomModal() {

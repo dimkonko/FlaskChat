@@ -10,7 +10,6 @@ class MainModel(object):
 		if is_exists:
 			return False
 		else:
-			print "Adding to db"
 			self.user.add(nickname=user_form["nickname"],
 						  email=user_form["email"],
 						  password=user_form["hash"])
@@ -20,7 +19,6 @@ class MainModel(object):
 		data = self.user.get(email=login_form["email"])
 
 		if not data:
-			print "Login error: Empty data"
 			return False
 
 		user = data[0]

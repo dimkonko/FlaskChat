@@ -6,13 +6,11 @@ window.onload = function() {
 
     formSignup.onsubmit = function(event) {
         event.preventDefault();
-        console.log("Submiting...");
         var hash = CryptoJS.SHA3(inpPasswd.value).toString();
         sendData(
             document.getElementById("inp_email").value,
             hash
         );
-        console.log("ok");
         return false;
     }
 
@@ -27,7 +25,6 @@ window.onload = function() {
             cache: false,
             async:false,
             success: function(data) {
-                console.log(data);
                 if(data.error_msg) {
                     showError(data.error_msg);
                 } else {

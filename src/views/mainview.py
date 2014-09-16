@@ -56,3 +56,11 @@ def login():
 def logout():
 	session.pop("username", None)
 	return redirect("/")
+
+@mainview.route("/about")
+def about():
+	return render_template("about.html")
+
+@mainview.route("/contact_us")
+def countact_us():
+	return "Email: d.karacheban@gmail.com"

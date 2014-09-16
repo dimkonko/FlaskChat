@@ -20,17 +20,17 @@ def background_thread():
 		time.sleep(5)
 		count += 1
 		news = news_model.get_rand_news()
-		news = "Server: " + news["title"] + ".\nCheck it out: " +\
-				news["link"]
-		print "Sending news: " + news
 		sock.emit(
 			'server_response',
-            {'news': news, 'count': count},
+            {'owner': news_bot_name, "text": news, 'count': count},
             namespace='/c', room="news"
         )
 
 thread = Thread(target=background_thread)
 thread.start()
+
+server_name = "Mr. Server"
+news_bot_name = "Mr. News Bot"
 
 
 @sock.on("connect", namespace="/c")
@@ -40,12 +40,13 @@ def test_connect():
 	get_channels()
 	emit(
     	"server_response", 
-		"Welcome. Choose the room to enter"
+		{"owner": server_name,
+		 "text": "Welcome. Choose the room to enter"}
 	)
 
 @sock.on("disconnect", namespace="/c")
 def test_disconnect():
-    print "Client disconnected"
+	pass
 
 @sock.on("room_msg", namespace="/c")
 def test_message(data):
@@ -54,7 +55,7 @@ def test_message(data):
 	username = session["username"]
 	emit(
 		"server_response",
-		username + ": " + message,
+		{"owner": username, "text": message},
 		broadcast=True,
 		room=user_room
 	)
@@ -78,7 +79,7 @@ def on_join(data):
 	get_channels()
 	emit(
 		"server_response",
-		session["username"] + " has entered the room " + new_room,
+		{"owner": server_name, "text": session["username"] + " has entered the room " + new_room},
 		broadcast=False,
 		room=new_room
 	)
@@ -89,7 +90,7 @@ def on_leave():
     room = session["room"]
     emin(
     	"server_response",
-    	username + " has left the room " + room,
+    	{"owner": server_name, "text": username + " has left the room " + room},
     	room=room
     )
     leave_room(room)
@@ -98,8 +99,8 @@ def on_leave():
 def search_channel(msg):
 	channels = list()
 	for room in rooms:
-		if msg in room.name:
-			channels.append(room.name)
+		if msg in room:
+			channels.append(room)
 	emit(
 		"get_channels",
 		{"data": channels},

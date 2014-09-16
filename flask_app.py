@@ -26,7 +26,7 @@ if not os.path.isfile("db/users.db"):
 
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 app.secret_key = os.urandom(27)
 
 app.register_blueprint(mainview)

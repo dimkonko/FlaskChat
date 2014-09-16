@@ -16,3 +16,11 @@ def chat():
    		)
 	#return "You are not logged in"
 	return redirect("/")
+
+@chatview.route("/get_message", methods=["POST"])
+def get_message():
+	if request.methods == "POST":
+		nickname = request.form["nickname"]
+		message = request.form["message"]
+		return render_template("message.html",
+				nickname=nickname, message=message)
