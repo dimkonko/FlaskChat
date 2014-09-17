@@ -17,7 +17,7 @@ Flask chat with socketio sockets.
 
 `$ git clone http://github.com/dimkonko/FlaskChat.git`
 
-* Go into cloned project folder and install required libs
+* Go into project folder and install required libs
 
 ```
 $ cd FlaskChat/ 
