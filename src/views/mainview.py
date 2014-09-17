@@ -15,8 +15,9 @@ def index():
 		isLogedIn = True
 		if session["username"] == "admin":
 			isAdmin = True
-	return render_template("index.html",
-			isLogedIn=isLogedIn, isAdmin=True)
+	return redirect("/login")
+	# return render_template("index.html",
+	# 		isLogedIn=isLogedIn, isAdmin=True)
 
 @mainview.route("/signup", methods=["GET", "POST"])
 def signup():

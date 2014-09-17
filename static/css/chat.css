@@ -70,6 +70,7 @@ a {
 	padding: 0;
 	margin-top: 5px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 #channels li {
 	font-size: 1.1em;

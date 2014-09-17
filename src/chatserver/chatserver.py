@@ -5,19 +5,22 @@ from flask import session
 from flask.ext.socketio import SocketIO, emit, join_room, leave_room, send
 
 from flask_app import app
-from src.models.newsmodel import NewsModel
+from newsmodel import NewsModel
 
 
 sock = SocketIO(app)
 
 rooms = ["main", "news"]
 
+server_name = "Mr. Server"
+news_bot_name = "Mr. News Bot"
+
 
 def background_thread():
 	count = 0
 	news_model = NewsModel()
 	while True:
-		time.sleep(5)
+		time.sleep(300)
 		count += 1
 		news = news_model.get_rand_news()
 		sock.emit(
@@ -26,22 +29,19 @@ def background_thread():
             namespace='/c', room="news"
         )
 
+
 thread = Thread(target=background_thread)
 thread.start()
-
-server_name = "Mr. Server"
-news_bot_name = "Mr. News Bot"
 
 
 @sock.on("connect", namespace="/c")
 def test_connect():
 	if "username" not in session:
 		return
-	get_channels()
 	emit(
-    	"server_response", 
-		{"owner": server_name,
-		 "text": "Welcome. Choose the room to enter"}
+    	"connection",
+		{"room": rooms[0]},
+		broadcast=False
 	)
 
 @sock.on("disconnect", namespace="/c")
@@ -76,7 +76,6 @@ def on_join(data):
 	session["room"] = new_room
 
 	join_room(new_room)
-	get_channels()
 	emit(
 		"server_response",
 		{"owner": server_name, "text": session["username"] + " has entered the room " + new_room},
@@ -107,11 +106,8 @@ def search_channel(msg):
 		broadcast=False
 	)
 
-@sock.on("update_channels", namespace="/c")
-def update_channels(msg):
-	get_channels()
-
-def get_channels():
+@sock.on("get_channels", namespace="/c")
+def update_channels():
 	channels = [r for r in rooms]
 	emit(
 		"get_channels",

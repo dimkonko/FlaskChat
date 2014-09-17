@@ -16,11 +16,12 @@ class NewsModel(object):
 
 	def get_rand_news(self):
 		while True:
+			news = None
 			try:
 				news = self.news[randint(0, len(self.news))]
 			except:
 				pass
 
-			if len(news.text) > 4:
+			if news and len(news.text) > 4:
 				# > 4, becouse there are some 'fakse' elements
 				return str(news.findAll("a", href=True)[0])
