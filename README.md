@@ -13,9 +13,12 @@ FlaskChat
 
 `$ virtualenv my_env`
 
-* Clone project from git and copy to your virtualenv folder
+* Enter your virtualenv folder and clone project from git
 
-`$ git clone http://github.com/dimkonko/FlaskChat.git`
+```
+$ cd my_env
+$ git clone http://github.com/dimkonko/FlaskChat.git`
+```
 
 * Go into project folder and install required libs
 
