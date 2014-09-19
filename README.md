@@ -13,7 +13,7 @@ FlaskChat
 
 `$ virtualenv my_env`
 
-* Clone project from git
+* Clone project from git and copy to your virtualenv folder
 
 `$ git clone http://github.com/dimkonko/FlaskChat.git`
 
