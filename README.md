@@ -3,7 +3,7 @@ FlaskChat
 
 ###Flask chat with socketio sockets.###
 
-####Try yourself: http://evening-scrubland-5667.herokuapp.com/####
+#####Try yourself: http://evening-scrubland-5667.herokuapp.com/#####
 
 ## Initialization
 
