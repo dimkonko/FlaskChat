@@ -3,6 +3,8 @@ FlaskChat
 
 ###Flask chat with socketio sockets.###
 
+###Try yourself: [http://evening-scrubland-5667.herokuapp.com/]
+
 ## Initialization
 
 * Install virtualenv
